@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "801209497808",
+    "firebase_url": "https://elderberry-inventory-f0dc8-default-rtdb.firebaseio.com",
+    "project_id": "elderberry-inventory-f0dc8",
+    "storage_bucket": "elderberry-inventory-f0dc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801209497808:android:d551cb43015f4ccf4086d5",
+        "android_client_info": {
+          "package_name": "com.example.elderberryinventoryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801209497808-ssst8mhgkjetqb10iqag9rlrn57niusf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJTdUGGfOj7d68p4MEt_fjs4XMOw2PB40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801209497808-ssst8mhgkjetqb10iqag9rlrn57niusf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
