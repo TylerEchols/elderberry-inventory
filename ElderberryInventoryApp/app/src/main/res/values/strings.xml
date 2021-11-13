@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ElderberryInventoryApp</string>
+    <string name="inventory_nav_button_label">Inventory</string>
+    <string name="calculator_nav_button_label">Calculator</string>
+    <string name="go_get_nav_button_label">Go Get</string>
+
+    <string-array name="item_categories">
+        <item>Syrups</item>
+        <item>Concentrates</item>
+        <item>Teas</item>
+        <item>Other Products</item>
+        <item>Ingredients</item>
+    </string-array>
 </resources>
