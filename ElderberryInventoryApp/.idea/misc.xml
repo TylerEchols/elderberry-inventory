@@ -6,7 +6,10 @@
         <entry key="..\:/Users/Sara/IdeaProjects/Project/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_aeproducts.xml" value="0.33" />
         <entry key="..\:/Users/Sara/IdeaProjects/Project/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/tyech/ElderberryInventoryApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_aeproducts.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_calculator.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_go_get.xml" value="0.33" />
+        <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/tyech/elderberry-inventory/ElderberryInventoryApp/app/src/main/res/menu/top_nav_menu.xml" value="0.35260416666666666" />
       </map>
     </option>
@@ -16,5 +19,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.33" />
+      </ProjectState>
+    </option>
   </component>
 </project>

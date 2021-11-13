@@ -3,6 +3,8 @@
     <string name="inventory_nav_button_label">Inventory</string>
     <string name="calculator_nav_button_label">Calculator</string>
     <string name="go_get_nav_button_label">Go Get</string>
+    <string name="number_hint_text">#</string>
+    <string name="calculate_button_label">Calculate</string>
 
     <string-array name="item_categories">
         <item>Syrups</item>
