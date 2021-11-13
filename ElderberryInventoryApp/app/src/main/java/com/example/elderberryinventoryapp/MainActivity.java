@@ -13,17 +13,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-=======
     // Member variables
     Spinner categorySpinner; // Spinner is the term for dropdown menu
 
 
     // Constructor
->>>>>>> 5a5d424c24a91853686810de794010da20f0570f
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
