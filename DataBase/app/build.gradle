@@ -7,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.elderberryinventoryapp"
+        applicationId "com.example.myapplication"
         minSdk 21
         targetSdk 31
         versionCode 1

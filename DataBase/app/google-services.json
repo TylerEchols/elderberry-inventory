@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "473228956849",
+    "project_id": "elderberry-inventory",
+    "storage_bucket": "elderberry-inventory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473228956849:android:c7268fa02cd6ab6ee13e90",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473228956849-0inff9upe8nrf3i7uheopatj2jd8k9pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBISKucDvvAEOV_PksrdJ6CgFxMm9StBKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473228956849-0inff9upe8nrf3i7uheopatj2jd8k9pn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
