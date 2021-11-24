@@ -46,10 +46,8 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
 
         public MyViewHolder(@NonNull View ItemView){
             super(ItemView);
-            name = ItemView.findViewById(R.id.txtname);
-            id = ItemView.findViewById(R.id.txtid);
+            name = ItemView.findViewById(R.id.txtname1);
+            id = ItemView.findViewById(R.id.txtid1);
         }
-
-
     }
 }
