@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="110dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
     android:padding="10dp"
-    android:layout_margin="10dp">
+    app:cardBackgroundColor="#BCECF3"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,46 +18,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="ID :"
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/txtid1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="syrup"
                 android:layout_marginStart="20dp"
-                android:id="@+id/txtid1"
-                android:textStyle="bold"
-                android:textSize="17sp"
                 android:padding="5dp"
-                />
+                android:text="syrup"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="Name:"
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/txtname1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="syrup"
                 android:layout_marginStart="20dp"
-                android:id="@+id/txtname1"
-                android:textStyle="bold"
-                android:textSize="17sp"
                 android:padding="5dp"
-                />
+                android:text="syrup"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
 
