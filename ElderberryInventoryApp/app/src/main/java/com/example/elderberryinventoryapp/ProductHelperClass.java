@@ -1,16 +1,17 @@
 package com.example.elderberryinventoryapp;
 
 public class ProductHelperClass {
-    String name , id , numberOfHave , minNumber;
+    String name , id , numberOfHave , minNumber, batchResult;
 
     public ProductHelperClass() {
     }
 
-    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber) {
+    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber, String batchResult) {
         this.name = name;
         this.id = id;
         this.numberOfHave = numberOfHave;
         this.minNumber = minNumber;
+        this.batchResult = batchResult;
     }
 
     public String getName() {
@@ -43,5 +44,13 @@ public class ProductHelperClass {
 
     public void setMinNumber(String minNumber) {
         this.minNumber = minNumber;
+    }
+
+    public String getBatchResult() {
+        return batchResult;
+    }
+
+    public void setBatchResult(String batchResult) {
+        this.batchResult = batchResult;
     }
 }

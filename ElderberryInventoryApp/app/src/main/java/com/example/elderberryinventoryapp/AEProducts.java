@@ -13,8 +13,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AEProducts extends AppCompatActivity {
 
-    EditText pName , pid , pNumberOfHave , pMinNumber;
-    Button btnAdd , btnClose;
+    EditText pName, pid, pNumberOfHave, pMinNumber, pbatchResult;
+    Button btnAdd, btnClose;
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
@@ -24,14 +24,22 @@ public class AEProducts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aeproducts);
 
-        pName =(EditText) findViewById(R.id.txtname);
-        pid =(EditText) findViewById(R.id.txtid);
-        pNumberOfHave =(EditText) findViewById(R.id.txtNhave);
-        pMinNumber =(EditText) findViewById(R.id.txtNmin);
-        btnAdd =(Button) findViewById(R.id.btnAdd);
+        pName = (EditText) findViewById(R.id.txtname);
+        pid = (EditText) findViewById(R.id.txtid);
+        pNumberOfHave = (EditText) findViewById(R.id.txtNhave);
+        pMinNumber = (EditText) findViewById(R.id.txtNmin);
+        pbatchResult = (EditText) findViewById(R.id.txtbatchResult);
+        btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*
+                First we should create the database using this link
+                https://console.firebase.google.com/u/0/
+                and then in Android studio from Tools>firebase and click on realtime database
+                we should connect the App to the database which we created on firebase.
+                 */
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("products");
 
@@ -39,13 +47,16 @@ public class AEProducts extends AppCompatActivity {
                 String id = pid.getText().toString();
                 String numberOfHave = pNumberOfHave.getText().toString();
                 String minNumber = pMinNumber.getText().toString();
-                ProductHelperClass helperClass = new ProductHelperClass(name,id, numberOfHave, minNumber);
-//                reference.child(id).setValue(helperClass);
-                reference.push().setValue(helperClass);
+                String batchResult = pbatchResult.getText().toString();
+                ProductHelperClass helperClass = new ProductHelperClass(name, id, numberOfHave, minNumber, batchResult);
+                reference.child(id).setValue(helperClass);//Use id as the primary key
+//                reference.push().setValue(helperClass); // Generate primary key randomly
 
 
-                Toast toast = Toast.makeText(getApplicationContext(), name+"Saved successfully", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), name + "Saved successfully", Toast.LENGTH_SHORT);
                 toast.show();
+                clearTexts();
+
             }
         });
 
@@ -58,6 +69,13 @@ public class AEProducts extends AppCompatActivity {
             }
         });
 
+    }
 
+    public void clearTexts() {
+        pName.setText("");
+        pid.setText("");
+        pNumberOfHave.setText("");
+        pMinNumber.setText("");
+        pbatchResult.setText("");
     }
 }
