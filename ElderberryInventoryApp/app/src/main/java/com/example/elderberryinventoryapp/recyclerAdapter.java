@@ -1,5 +1,6 @@
 package com.example.elderberryinventoryapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,31 +14,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
-    private ArrayList<InventoryItem> itemsList;
+    private ArrayList<ProductHelperClass> itemsList;
+    Context context;
 
     // Constructor
-    public recyclerAdapter(ArrayList<InventoryItem> itemsList){
+    public recyclerAdapter(Context context , ArrayList<ProductHelperClass> itemsList){
         this.itemsList = itemsList;
+        this.context = context;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         // Member Variables for each widget in inventory_item_card.xml
         private EditText textMinNumber;
-        private EditText textMinLabel;
-        private ImageView imageView;
+//        private EditText textMinLabel;
+//        private ImageView imageView;
         private EditText textItemName;
         private EditText textHaveNumber;
-        private EditText textHaveLabel;
+//        private EditText textHaveLabel;
 
+        
         public MyViewHolder(final View view){
             super(view);
             //nameTxt = view.findViewById(R.id.textView2);
             textMinNumber = view.findViewById(R.id.etMinNumber);
-            textMinLabel = view.findViewById(R.id.etMinLabel);
-            imageView = view.findViewById(R.id.imageView);
+//            textMinLabel = view.findViewById(R.id.etMinLabel);
+//            imageView = view.findViewById(R.id.imageView);
             textItemName = view.findViewById(R.id.etItemName);
             textHaveNumber = view.findViewById(R.id.etHaveNumber);
-            textHaveLabel = view.findViewById(R.id.etHaveLabel);
+//            textHaveLabel = view.findViewById(R.id.etHaveLabel);
         }
     }
 
@@ -51,11 +55,12 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     // Populate "cards" to display using data from itemsList
     @Override
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        holder.textMinNumber.setText(itemsList.get(position).getTextMinNumber());
+        ProductHelperClass model = itemsList.get(position);
+        holder.textMinNumber.setText(model.getMinNumber());
         // Placeholder line for if we decide to include thumbnails
         // holder.imageView.setImageResource(itemsList.get(position).getImageView());
-        holder.textItemName.setText(itemsList.get(position).getTextItemName());
-        holder.textHaveNumber.setText(itemsList.get(position).getTextHaveNumber());
+        holder.textItemName.setText(itemsList.get(position).getName());
+        holder.textHaveNumber.setText(itemsList.get(position).getNumberOfHave());
 
     }
 

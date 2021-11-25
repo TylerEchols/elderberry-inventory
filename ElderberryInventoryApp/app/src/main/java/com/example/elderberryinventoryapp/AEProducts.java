@@ -35,7 +35,7 @@ public class AEProducts extends AppCompatActivity {
             public void onClick(View v) {
 
                 /*
-                First we should create the database using this link
+                First we should create the database using this link:
                 https://console.firebase.google.com/u/0/
                 and then in Android studio from Tools>firebase and click on realtime database
                 we should connect the App to the database which we created on firebase.

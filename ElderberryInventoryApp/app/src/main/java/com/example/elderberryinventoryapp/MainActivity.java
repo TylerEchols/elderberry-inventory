@@ -1,5 +1,6 @@
 package com.example.elderberryinventoryapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,21 +15,25 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference root = db.getReference().child("products");
 
     // Member variables
     Spinner categorySpinner; // Spinner is the term for dropdown menu
-    Button btnProduct;
-    private ArrayList<InventoryItem> itemsList;
+    Button btnProduct ;
+    private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
+    recyclerAdapter adapter;
 
 
     // Constructor
@@ -37,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.items_recycler_view);
-        itemsList = new ArrayList<>();
-
-        // TESTING
-        setTestData();
 
         setSpinnerAdapter();
         setRecyclerAdapter();
@@ -62,12 +63,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Initialize RecyclerView's adapter for list of items
+
     private void setRecyclerAdapter() {
-        recyclerAdapter adapter = new recyclerAdapter(itemsList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //Database
+        itemsList = new ArrayList<>();
+        adapter = new recyclerAdapter(this,itemsList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        root.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
+                    itemsList.add(model);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
     }
 
 
@@ -88,13 +107,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // TESTING
-    // Initialize hard-coded data to use for testing purposes
-    // This code should be removed or disabled for final product
-    private void setTestData(){
-        // Items for RecyclerView to display
-        itemsList.add(new InventoryItem("Juice Powder", "5", "10"));
-        itemsList.add(new InventoryItem("Dried Berries", "8", "10"));
-        itemsList.add(new InventoryItem("Syrup Cases", "2", "1"));
-    }
+
 }
