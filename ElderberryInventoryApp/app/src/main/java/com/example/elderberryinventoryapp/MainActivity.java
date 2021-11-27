@@ -44,9 +44,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.items_recycler_view);
 
         setSpinnerAdapter();
-        setRecyclerAdapter();
         initializeNewItemButton();
 
+    }
+
+    // Called when activity is resumed, not just started
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Refresh RecyclerView
+        setRecyclerAdapter();
     }
 
 
@@ -92,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Initialize button for added new item
     private void initializeNewItemButton(){
-        // I did not want change the layout so I used go-get-nave-button to add new Item to Product table
-        // Tyler rebound from go_get_nav_button to addItemButton Nov/24/2021
         btnProduct = (Button) findViewById(R.id.addItemButton);
         btnProduct.setOnClickListener(new View.OnClickListener() {
             @Override

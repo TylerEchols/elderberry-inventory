@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,11 +25,11 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         // Member Variables for each widget in inventory_item_card.xml
-        private EditText textMinNumber;
-//        private EditText textMinLabel;
+        private TextView textMinNumber;
+//        private TextView textMinLabel;
 //        private ImageView imageView;
-        private EditText textItemName;
-        private EditText textHaveNumber;
+        private TextView textItemName;
+        private TextView textHaveNumber;
 //        private EditText textHaveLabel;
 
         
