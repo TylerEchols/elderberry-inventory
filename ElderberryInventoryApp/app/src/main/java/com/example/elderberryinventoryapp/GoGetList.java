@@ -23,13 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class GoGetList extends AppCompatActivity {
 
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference root = db.getReference().child("products");
 
     // Member variables
-    Spinner categorySpinner; // Spinner is the term for dropdown menu
     Button btnProduct ;
     private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
@@ -42,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.items_recycler_view);
-
-        setSpinnerAdapter();
-        initializeNewItemButton();
-
     }
 
     // Called when activity is resumed, not just started
@@ -55,18 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Refresh RecyclerView
         setRecyclerAdapter();
-    }
-
-
-    // Initialize Spinner for item category drop-down
-    private void setSpinnerAdapter(){
-        // Spinner code borrows heavily from https://code.tutsplus.com/tutorials/how-to-add-a-dropdown-menu-in-android-studio--cms-37860
-        categorySpinner = findViewById(R.id.category_spinner); // Dropdown menu for choosing item category
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-                (this, R.array.item_categories, android.R.layout.simple_spinner_item);
-        // ArrayAdapter responsible for rendering items in item_categories
-        // to screen when dropdown menu is pressed
-        categorySpinner.setAdapter(adapter); // Bind ArrayAdapter to Spinner
     }
 
 
@@ -94,29 +77,5 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
     }
-
-
-    // Initialize button for added new item
-    private void initializeNewItemButton(){
-        btnProduct = (Button) findViewById(R.id.addItemButton);
-        btnProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create the Intent object of this class Context() to Second_activity class
-                Intent intent = new Intent(getApplicationContext(), AEProducts.class);
-
-                // start the Intent
-                startActivity(intent);
-            }
-        });
-    }
-
-    // Navigate to GoGet Activity
-    public void navigateGoGet(View view) {
-        Intent intent = new Intent(getApplicationContext(), GoGetList.class);
-        startActivity(intent);
-    }
-
 }

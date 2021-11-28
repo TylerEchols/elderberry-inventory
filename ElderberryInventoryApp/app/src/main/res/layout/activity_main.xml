@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:insetTop="0dp"
         android:insetBottom="0dp"
+        android:onClick="navigateGoGet"
         android:text="@string/go_get_nav_button_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calculator_nav_button"
