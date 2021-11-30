@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Initialize RecyclerView's adapter for list of items
-
     private void setRecyclerAdapter() {
         //Database
         itemsList = new ArrayList<>();
@@ -116,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
     // Navigate to GoGet Activity
     public void navigateGoGet(View view) {
         Intent intent = new Intent(getApplicationContext(), GoGetList.class);
+        startActivity(intent);
+    }
+    // Navigate to Main Activity
+    public void navigateInventory(View view) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 

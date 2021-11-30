@@ -2,6 +2,7 @@ package com.example.elderberryinventoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AEProducts extends AppCompatActivity {
 
-    EditText pName, pid, pNumberOfHave, pMinNumber, pbatchResult;
+    EditText pName, pid, pNumberOfHave, pMinNumber;
     Button btnAdd, btnClose;
 
     FirebaseDatabase rootNode;
@@ -28,8 +29,27 @@ public class AEProducts extends AppCompatActivity {
         pid = (EditText) findViewById(R.id.txtid);
         pNumberOfHave = (EditText) findViewById(R.id.txtNhave);
         pMinNumber = (EditText) findViewById(R.id.txtNmin);
-        pbatchResult = (EditText) findViewById(R.id.txtbatchResult);
+//        pbatchResult = (EditText) findViewById(R.id.txtbatchResult);
         btnAdd = (Button) findViewById(R.id.btnAdd);
+
+        DAOProduct dao =new DAOProduct();
+        ProductHelperClass emp_edit = (ProductHelperClass) getIntent().getSerializableExtra("EDIT");
+        if(emp_edit !=null)
+        {
+            btnAdd.setText("UPDATE");
+            pName.setText(emp_edit.getName());
+            pid.setText(emp_edit.getId());
+            pNumberOfHave.setText(emp_edit.getNumberOfHave());
+            pMinNumber.setText(emp_edit.getMinNumber());
+        }
+        else
+        {
+            btnAdd.setText("Add");
+        }
+
+//        btnAdd.setBackgroundColor(Color.WHITE);
+//        btnAdd.setTextColor(Color.BLACK);
+        //Save Data into the firebase database
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,15 +67,16 @@ public class AEProducts extends AppCompatActivity {
                 String id = pid.getText().toString();
                 String numberOfHave = pNumberOfHave.getText().toString();
                 String minNumber = pMinNumber.getText().toString();
-                String batchResult = pbatchResult.getText().toString();
-                ProductHelperClass helperClass = new ProductHelperClass(name, id, numberOfHave, minNumber, batchResult);
+//                String batchResult = pbatchResult.getText().toString();
+                ProductHelperClass helperClass = new ProductHelperClass(name, id, numberOfHave, minNumber);
                 reference.child(id).setValue(helperClass);//Use id as the primary key
 //                reference.push().setValue(helperClass); // Generate primary key randomly
 
 
                 Toast toast = Toast.makeText(getApplicationContext(), name + "Saved successfully", Toast.LENGTH_SHORT);
                 toast.show();
-                clearTexts();
+                finish();
+//                clearTexts();
 
             }
         });
@@ -76,6 +97,11 @@ public class AEProducts extends AppCompatActivity {
         pid.setText("");
         pNumberOfHave.setText("");
         pMinNumber.setText("");
-        pbatchResult.setText("");
+//        pbatchResult.setText("");
+    }
+
+    public void edit(){
+
+
     }
 }

@@ -25,22 +25,22 @@ import java.util.ArrayList;
 
 public class GoGetList extends AppCompatActivity {
 
-    private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference root = db.getReference().child("products");
+//    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+//    private DatabaseReference root = db.getReference().child("products");
 
     // Member variables
-    Button btnProduct ;
-    private ArrayList<ProductHelperClass> itemsList;
-    private RecyclerView recyclerView;
-    recyclerAdapter adapter;
+//    Button btnProduct ;
+//    private ArrayList<ProductHelperClass> itemsList;
+//    private RecyclerView recyclerView;
+//    recyclerAdapter adapter;
 
 
     // Constructor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.items_recycler_view);
+        setContentView(R.layout.activity_go_get_list);
+//        recyclerView = findViewById(R.id.items_recycler_view);
     }
 
     // Called when activity is resumed, not just started
@@ -49,7 +49,7 @@ public class GoGetList extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
-        setRecyclerAdapter();
+//        setRecyclerAdapter();
     }
 
 
@@ -57,25 +57,30 @@ public class GoGetList extends AppCompatActivity {
 
     private void setRecyclerAdapter() {
         //Database
-        itemsList = new ArrayList<>();
-        adapter = new recyclerAdapter(this,itemsList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+//        itemsList = new ArrayList<>();
+//        adapter = new recyclerAdapter(this,itemsList);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(adapter);
+//
+//        root.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
+//                    itemsList.add(model);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+    }
 
-        root.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-                    itemsList.add(model);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+    public void navigateInventory(View view) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -4,30 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C0F3FA"
+    android:background="#051019"
     tools:context=".AEProducts">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="ID :"
-            android:textColor="@color/black"
+            android:text="ID "
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/txtid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:background="@color/white"
+            android:background="#B2E7E8"
             android:padding="5dp"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -36,17 +37,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Name :"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Name "
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/txtname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:background="@color/white"
+            android:background="#B2E7E8"
             android:padding="5dp"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -55,17 +55,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Number of Have :"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Number of Have "
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/txtNhave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:background="@color/white"
+            android:background="#B2E7E8"
             android:padding="5dp"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -74,37 +73,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Min Number :"
-            android:textColor="@color/black"
+            android:text="Min Number "
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/txtNmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:background="@color/white"
-            android:padding="5dp"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Batch-Result :"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/txtbatchResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:background="@color/white"
+            android:background="#B2E7E8"
             android:padding="5dp"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -113,15 +92,18 @@
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:text="Add" />
+            android:text="Add"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnClose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Close" />
+            android:text="Close"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

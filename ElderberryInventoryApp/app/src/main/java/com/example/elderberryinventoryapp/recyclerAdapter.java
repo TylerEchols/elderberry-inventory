@@ -1,36 +1,39 @@
 package com.example.elderberryinventoryapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
+public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<ProductHelperClass> itemsList;
     Context context;
 
     // Constructor
     public recyclerAdapter(Context context , ArrayList<ProductHelperClass> itemsList){
         this.itemsList = itemsList;
+//        this.itemsList.addAll(itemsList);
+
         this.context = context;
     }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         // Member Variables for each widget in inventory_item_card.xml
         private TextView textMinNumber;
-//        private TextView textMinLabel;
-//        private ImageView imageView;
+
         private TextView textItemName;
         private TextView textHaveNumber;
-//        private EditText textHaveLabel;
+        private TextView textOption;
 
         
         public MyViewHolder(final View view){
@@ -41,6 +44,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 //            imageView = view.findViewById(R.id.imageView);
             textItemName = view.findViewById(R.id.etItemName);
             textHaveNumber = view.findViewById(R.id.etHaveNumber);
+            textOption = view.findViewById(R.id.txt_option);
 //            textHaveLabel = view.findViewById(R.id.etHaveLabel);
         }
     }
@@ -52,15 +56,62 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         return new MyViewHolder(itemView);
     }
 
-    // Populate "cards" to display using data from itemsList
     @Override
-    public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        ProductHelperClass model = itemsList.get(position);
-        holder.textMinNumber.setText(model.getMinNumber());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ProductHelperClass p = null;
+        this.onBindViewHolder(holder,position,p);
+    }
+
+    // Populate "cards" to display using data from itemsList
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, ProductHelperClass p) {
+        MyViewHolder vh = (MyViewHolder) holder;
+
+//        ProductHelperClass model = itemsList.get(position);
+
+        ProductHelperClass pro = p==null? itemsList.get(position):p;
+        vh.textMinNumber.setText(pro.getMinNumber());
+
+
         // Placeholder line for if we decide to include thumbnails
         // holder.imageView.setImageResource(itemsList.get(position).getImageView());
-        holder.textItemName.setText(itemsList.get(position).getName());
-        holder.textHaveNumber.setText(itemsList.get(position).getNumberOfHave());
+        vh.textItemName.setText(pro.getName());
+        vh.textHaveNumber.setText(pro.getNumberOfHave());
+        vh.textOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, vh.textOption);
+                popupMenu.inflate(R.menu.options_menu);
+//                popupMenu.setOnMenuItemClickListener();
+                popupMenu.setOnMenuItemClickListener(item->
+                {
+                    switch (item.getItemId())
+                    {
+                          case R.id.menu_edit:
+                            Intent intent=new Intent(context,AEProducts.class);
+                            intent.putExtra("EDIT",pro);
+//                              intent.putExtra("EDT",pro.id);
+                            context.startActivity(intent);
+                            break;
+                        case R.id.menu_remove:
+                            DAOProduct dao=new DAOProduct();
+                            dao.remove(pro.getId()).addOnSuccessListener(suc->
+                            {
+                                Toast.makeText(context, "Record is removed", Toast.LENGTH_SHORT).show();
+                                notifyItemRemoved(position);
+                                itemsList.remove(pro);
+                            }).addOnFailureListener(er->
+                            {
+                                Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
+                            break;
+                    }
+                    return false;
+                });
+                popupMenu.show();
+            }
+
+        });
 
     }
 

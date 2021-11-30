@@ -4,12 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="8dp"
     android:layout_margin="5dp"
+    android:background="#B2E7E8"
     android:padding="10dp"
-    app:cardBackgroundColor="#BCECF3"
-    android:background="#BCECF3">
+    app:cardBackgroundColor="#FFEB3B"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp">
+
+    <TextView
+        android:id="@+id/txt_option"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="&#8942;"
+
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/etMinNumber"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/etMinNumber"
@@ -22,6 +34,7 @@
         android:ems="2"
         android:text="#"
         android:textAlignment="center"
+        android:textColor="#ED8975"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/etHaveNumber"
@@ -72,6 +85,7 @@
         android:ems="2"
         android:text="#"
         android:textAlignment="center"
+        android:textColor="#1D7020"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/etItemName"
@@ -99,10 +113,15 @@
 
     <Button
         android:id="@+id/button_edit"
-        android:layout_width="50dp"
-        android:layout_height="60dp"
+        android:layout_width="49dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="28dp"
+        android:background="#ED8975"
         android:text="*"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#9C27B0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,18 @@
 package com.example.elderberryinventoryapp;
 
-public class ProductHelperClass {
-    String name , id , numberOfHave , minNumber, batchResult;
+import java.io.Serializable;
+
+class ProductHelperClass implements Serializable {
+    String name , id , numberOfHave , minNumber;
 
     public ProductHelperClass() {
     }
 
-    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber, String batchResult) {
+    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber) {
         this.name = name;
         this.id = id;
         this.numberOfHave = numberOfHave;
         this.minNumber = minNumber;
-        this.batchResult = batchResult;
     }
 
     public String getName() {
@@ -46,11 +47,7 @@ public class ProductHelperClass {
         this.minNumber = minNumber;
     }
 
-    public String getBatchResult() {
-        return batchResult;
-    }
 
-    public void setBatchResult(String batchResult) {
-        this.batchResult = batchResult;
-    }
+
+
 }
