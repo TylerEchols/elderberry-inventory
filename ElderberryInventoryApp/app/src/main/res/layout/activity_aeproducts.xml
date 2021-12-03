@@ -11,14 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="ID "
+            android:text="Item ID#"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="normal" />
@@ -55,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Number of Have "
+            android:text="Current Stock"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -73,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Min Number "
+            android:text="Minimum Stock"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="normal" />
@@ -87,6 +90,23 @@
             android:padding="5dp"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="5dp"
+            android:text="Select Category"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/category_select_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0dp"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:backgroundTint="#B2E7E8" />
 
         <Button
             android:id="@+id/btnAdd"

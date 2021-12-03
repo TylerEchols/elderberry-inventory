@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderberryInventoryApp">
         <activity
+            android:name=".AEIngredient"
+            android:exported="false" />
+        <activity
+            android:name=".AERecipe"
+            android:exported="false" />
+        <activity
             android:name=".GoGetList"
             android:exported="true" />
         <activity

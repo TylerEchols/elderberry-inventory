@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -16,21 +18,31 @@ public class AEProducts extends AppCompatActivity {
 
     EditText pName, pid, pNumberOfHave, pMinNumber;
     Button btnAdd, btnClose;
+    Spinner categorySpinner; // Spinner is the term for dropdown menu
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aeproducts);
 
+        bindButtons();
+        setListeners();
+        setSpinnerAdapter();
+    }
+
+
+    private void bindButtons(){
         pName = (EditText) findViewById(R.id.txtname);
         pid = (EditText) findViewById(R.id.txtid);
         pNumberOfHave = (EditText) findViewById(R.id.txtNhave);
         pMinNumber = (EditText) findViewById(R.id.txtNmin);
 //        pbatchResult = (EditText) findViewById(R.id.txtbatchResult);
         btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnClose = (Button) findViewById(R.id.btnClose);
 
         DAOProduct dao =new DAOProduct();
         ProductHelperClass emp_edit = (ProductHelperClass) getIntent().getSerializableExtra("EDIT");
@@ -46,9 +58,9 @@ public class AEProducts extends AppCompatActivity {
         {
             btnAdd.setText("Add");
         }
+    }
 
-//        btnAdd.setBackgroundColor(Color.WHITE);
-//        btnAdd.setTextColor(Color.BLACK);
+    private void setListeners(){
         //Save Data into the firebase database
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,15 +93,23 @@ public class AEProducts extends AppCompatActivity {
             }
         });
 
-
-        btnClose = (Button) findViewById(R.id.btnClose);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
 
+    // Initialize Spinner for item category drop-down
+    private void setSpinnerAdapter(){
+        // Spinner code borrows heavily from https://code.tutsplus.com/tutorials/how-to-add-a-dropdown-menu-in-android-studio--cms-37860
+        categorySpinner = findViewById(R.id.category_select_spinner); // Dropdown menu for choosing item category
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
+                (this, R.array.item_categories, android.R.layout.simple_spinner_item);
+        // ArrayAdapter responsible for rendering items in item_categories
+        // to screen when dropdown menu is pressed
+        categorySpinner.setAdapter(adapter); // Bind ArrayAdapter to Spinner
     }
 
     public void clearTexts() {
@@ -99,6 +119,7 @@ public class AEProducts extends AppCompatActivity {
         pMinNumber.setText("");
 //        pbatchResult.setText("");
     }
+
 
     public void edit(){
 

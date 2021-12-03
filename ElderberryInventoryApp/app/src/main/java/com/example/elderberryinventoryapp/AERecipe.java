@@ -20,15 +20,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class AERecipe extends AppCompatActivity {
 
     // Member variables
+    // Sara, please convert the Database statements here to import Recipe instead of Product
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference root = db.getReference().child("products");
 
     Spinner categorySpinner; // Spinner is the term for dropdown menu
-    Button btnAddProduct;
-    private ArrayList<ProductHelperClass> itemsList;
+    Button btnAddIngredient;
+    private ArrayList<ProductHelperClass> ingredientsList;
     private RecyclerView recyclerView;
     recyclerAdapter adapter;
 
@@ -37,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_aerecipe);
         recyclerView = findViewById(R.id.items_recycler_view);
 
         setSpinnerAdapter();
-        initializeNewItemButton();
+        initializeNewIngredientButton();
+        initializeSaveRecipeButton();
     }
 
     // Called when activity is resumed, not just started
@@ -58,20 +60,19 @@ public class MainActivity extends AppCompatActivity {
     private void setSpinnerAdapter(){
         // Spinner code borrows heavily from
         // https://code.tutsplus.com/tutorials/how-to-add-a-dropdown-menu-in-android-studio--cms-37860
-        categorySpinner = findViewById(R.id.category_filter_spinner); // Dropdown menu for choosing item category
+        categorySpinner = findViewById(R.id.category_filter_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (this, R.array.item_categories, android.R.layout.simple_spinner_item);
-        // ArrayAdapter responsible for rendering items in item_categories
-        // to screen when dropdown menu is pressed
-        categorySpinner.setAdapter(adapter); // Bind ArrayAdapter to Spinner
+        categorySpinner.setAdapter(adapter);
     }
 
 
     // Initialize RecyclerView's adapter for list of items
+    // Sara, please adjust this method to work with Recipes instead of Products
     private void setRecyclerAdapter() {
         //Database
-        itemsList = new ArrayList<>();
-        adapter = new recyclerAdapter(this,itemsList);
+        ingredientsList = new ArrayList<>();
+        adapter = new recyclerAdapter(this,ingredientsList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-                    itemsList.add(model);
+                    ingredientsList.add(model);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -94,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Initialize button for added new item
-    private void initializeNewItemButton(){
-        btnAddProduct = (Button) findViewById(R.id.addItemButton);
-        btnAddProduct.setOnClickListener(new View.OnClickListener() {
+    // Set OnClickListener for button to add Ingredient
+    private void initializeNewIngredientButton(){
+        btnAddIngredient = (Button) findViewById(R.id.addIngredientButton);
+        btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create the Intent object of this class Context() to Second_activity class
-                Intent intent = new Intent(getApplicationContext(), AEProducts.class);
+                Intent intent = new Intent(getApplicationContext(), AEIngredient.class);
 
                 // start the Intent
                 startActivity(intent);
@@ -109,15 +110,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Navigate to GoGet Activity
-    public void navigateGoGet(View view) {
-        Intent intent = new Intent(getApplicationContext(), GoGetList.class);
-        startActivity(intent);
-    }
-    // Navigate to Main Activity
-    public void navigateInventory(View view) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-    }
 
+    // Set OnClickListener for button to save Recipe
+    // Sara, please set this button to save the Recipe to whatever
+        // Product the user selected when we opened this Activity
+    private void initializeSaveRecipeButton(){
+
+    }
 }
