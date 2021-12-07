@@ -28,7 +28,7 @@ public class AEProducts extends AppCompatActivity {
 
 //    FirebaseDatabase rootNode;
 //    DatabaseReference reference;
-    private long maxid;
+    private long maxid = 0;
     FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     DatabaseReference reference = rootNode.getReference("products");
 
@@ -80,8 +80,8 @@ public class AEProducts extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
-                            maxid = snapshot.getChildrenCount();
-                            pid.setText(Long.toString(maxid+1));
+                            maxid = snapshot.getChildrenCount() + 1;
+                            pid.setText(Long.toString(maxid));
                         }
                     }
                     @Override
@@ -150,7 +150,7 @@ public class AEProducts extends AppCompatActivity {
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 4 )
+                if (position != 4 )
                     btnAddRecipt.setVisibility(View.VISIBLE);
                 else
                     btnAddRecipt.setVisibility(View.INVISIBLE);

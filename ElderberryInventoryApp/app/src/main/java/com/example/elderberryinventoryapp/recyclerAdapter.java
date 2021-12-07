@@ -18,6 +18,8 @@ import java.util.ArrayList;
 public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<ProductHelperClass> itemsList;
     Context context;
+    private int pos;
+
 
     // Constructor
     public recyclerAdapter(Context context , ArrayList<ProductHelperClass> itemsList){
@@ -35,6 +37,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView textHaveNumber;
         private TextView textOption;
         private Spinner categorySpinner;
+
 
         
         public MyViewHolder(final View view){
@@ -62,7 +65,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ProductHelperClass p = null;
-        this.onBindViewHolder(holder,position,p);
+        this.pos = position;
+        this.onBindViewHolder(holder,pos,p);
     }
 
     // Populate "cards" to display using data from itemsList
@@ -71,7 +75,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 //        ProductHelperClass model = itemsList.get(position);
 
-        ProductHelperClass pro = p==null? itemsList.get(position):p;
+        ProductHelperClass pro = p==null? itemsList.get(pos):p;
         vh.textMinNumber.setText(pro.getMinNumber());
         //----------------------------------
 
@@ -105,7 +109,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             dao.remove(pro.getId()).addOnSuccessListener(suc->
                             {
                                 Toast.makeText(context, "Record is removed", Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
+                                notifyItemRemoved(pos);
                                 itemsList.remove(pro);
                             }).addOnFailureListener(er->
                             {

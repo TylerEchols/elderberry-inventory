@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Member variables
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference root = db.getReference().child("products");
+    public DatabaseReference root = db.getReference().child("products");
 
     Spinner categorySpinner; // Spinner is the term for dropdown menu
     Button btnAddProduct;
