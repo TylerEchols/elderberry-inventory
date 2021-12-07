@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerAdapter adapter;
 
 
+
     // Constructor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Initialize button for added new item
     private void initializeNewItemButton(){
-        btnAddProduct = (Button) findViewById(R.id.addItemButton);
-        btnAddProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create the Intent object of this class Context() to Second_activity class
-                Intent intent = new Intent(getApplicationContext(), AEProducts.class);
+        btnAddProduct = findViewById(R.id.addItemButton);
+        btnAddProduct.setOnClickListener(v -> {
+            // Create the Intent object of this class Context() to Second_activity class
+            Intent intent = new Intent(getApplicationContext(), AEProducts.class);
 
-                // start the Intent
-                startActivity(intent);
-            }
+            // start the Intent
+            startActivity(intent);
         });
     }
 

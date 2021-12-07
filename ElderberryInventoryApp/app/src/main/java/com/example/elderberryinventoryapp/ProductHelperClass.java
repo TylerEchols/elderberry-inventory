@@ -3,16 +3,17 @@ package com.example.elderberryinventoryapp;
 import java.io.Serializable;
 
 class ProductHelperClass implements Serializable {
-    String name , id , numberOfHave , minNumber;
+    String name , id , numberOfHave , minNumber , category;
 
     public ProductHelperClass() {
     }
 
-    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber) {
+    public ProductHelperClass(String name, String id, String numberOfHave, String minNumber , String category) {
         this.name = name;
         this.id = id;
         this.numberOfHave = numberOfHave;
         this.minNumber = minNumber;
+        this.category = category;
     }
 
     public String getName() {
@@ -47,7 +48,11 @@ class ProductHelperClass implements Serializable {
         this.minNumber = minNumber;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
-
-
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

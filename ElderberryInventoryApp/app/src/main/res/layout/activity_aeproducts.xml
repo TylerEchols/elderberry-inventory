@@ -7,6 +7,8 @@
     android:background="#051019"
     tools:context=".AEProducts">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,6 +94,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/catLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -124,6 +127,16 @@
             android:layout_weight="1"
             android:text="Close"
             android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnAddRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Recipe"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="528dp" />
 
     </LinearLayout>
 

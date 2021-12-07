@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +31,10 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         // Member Variables for each widget in inventory_item_card.xml
         private TextView textMinNumber;
-
         private TextView textItemName;
         private TextView textHaveNumber;
         private TextView textOption;
+        private Spinner categorySpinner;
 
         
         public MyViewHolder(final View view){
@@ -45,6 +46,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             textItemName = view.findViewById(R.id.etItemName);
             textHaveNumber = view.findViewById(R.id.etHaveNumber);
             textOption = view.findViewById(R.id.txt_option);
+            categorySpinner = view.findViewById(R.id.category_select_spinner);
 //            textHaveLabel = view.findViewById(R.id.etHaveLabel);
         }
     }
@@ -71,18 +73,24 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ProductHelperClass pro = p==null? itemsList.get(position):p;
         vh.textMinNumber.setText(pro.getMinNumber());
-
+        //----------------------------------
 
         // Placeholder line for if we decide to include thumbnails
         // holder.imageView.setImageResource(itemsList.get(position).getImageView());
         vh.textItemName.setText(pro.getName());
         vh.textHaveNumber.setText(pro.getNumberOfHave());
+//        int pos = vh.categorySpinner.getPositionForView (value);
+//        getSpinnerField().setSelection(pos);
+//        vh.categorySpinner.setSelection(vh.categorySpinner.getAdapter().indexOf(pro.getCategory().toString()));
+
+
+
         vh.textOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context, vh.textOption);
                 popupMenu.inflate(R.menu.options_menu);
-//                popupMenu.setOnMenuItemClickListener();
+
                 popupMenu.setOnMenuItemClickListener(item->
                 {
                     switch (item.getItemId())
@@ -90,7 +98,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                           case R.id.menu_edit:
                             Intent intent=new Intent(context,AEProducts.class);
                             intent.putExtra("EDIT",pro);
-//                              intent.putExtra("EDT",pro.id);
                             context.startActivity(intent);
                             break;
                         case R.id.menu_remove:
