@@ -21,6 +21,11 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private ArrayList<ProductHelperClass> itemsList;
     Context context;
 
+    public void setItems(ArrayList<ProductHelperClass> pro)
+    {
+        itemsList.addAll(pro);
+    }
+
     // Constructor
     public recipeRecyclerAdapter(Context context_in, ArrayList<ProductHelperClass> itemsList_in){
         this.itemsList = itemsList_in;
@@ -72,6 +77,12 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // Please also set OnClickListener for 3-dot edit button
             // Should be almost the same as the one for Inventory Items, but
             // changing Ingredients in the Recipe instead of Items in the Inventory
+        RecipeViewHolder vh = (RecipeViewHolder) holder;
+
+        ProductHelperClass pro = p==null? itemsList.get(position):p;
+        vh.itemQuantityText.setText(pro.getMinNumber());
+        vh.itemNameText.setText(pro.getName());
+
     }
 
     @Override

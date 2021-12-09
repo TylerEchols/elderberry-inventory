@@ -3,6 +3,7 @@ package com.example.elderberryinventoryapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +37,7 @@ public class AEProducts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aeproducts);
-
+        getSupportActionBar().hide(); //Hide the action bar
         setSpinnerAdapter();
 
         bindButtons();
@@ -124,11 +125,14 @@ public class AEProducts extends AppCompatActivity {
 
             }
         });
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        btnClose.setOnClickListener(v -> finish());
+        btnAddRecipt.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), AERecipe.class);
+            Bundle extras = new Bundle();
+            extras.putString("pname",pName.getText().toString());
+            extras.putString("pid",pid.getText().toString());
+            intent.putExtras(extras);
+            startActivity(intent);
         });
     }
 

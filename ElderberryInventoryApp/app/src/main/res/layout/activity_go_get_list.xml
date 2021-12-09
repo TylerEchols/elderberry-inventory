@@ -42,8 +42,8 @@
         android:id="@+id/go_get_recycler_view"
         android:layout_width="409dp"
         android:layout_height="683dp"
+        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/teal_700"
         app:layout_constraintTop_toBottomOf="@+id/calculator_nav_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

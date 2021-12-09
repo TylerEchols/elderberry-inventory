@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -38,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide(); //Hide the action bar
+
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.items_recycler_view);
 
@@ -51,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
-        setRecyclerAdapter();
-    }
+        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
+        spinnerChange();
+     }
 
 
     // Initialize Spinner for item category drop-down
@@ -69,28 +79,50 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Initialize RecyclerView's adapter for list of items
-    private void setRecyclerAdapter() {
+    private void setRecyclerAdapter(String cat) {
         //Database
         itemsList = new ArrayList<>();
         adapter = new recyclerAdapter(this,itemsList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        root.addValueEventListener(new ValueEventListener() {
+//----
+        root = FirebaseDatabase.getInstance().getReference();
+        Query query = root.child("products").orderByChild("category").equalTo(cat);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-                    itemsList.add(model);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        // do with your result
+                        ProductHelperClass model = issue.getValue(ProductHelperClass.class);
+                        itemsList.add(model);
+                    }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+        //-----------
+//        root.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
+//                    itemsList.add(model);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
 
     }
 
@@ -104,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
             // start the Intent
             startActivity(intent);
+            spinnerChange();
         });
     }
 
@@ -117,5 +150,23 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
+
+    public void spinnerChange(){
+//        int iCurrentSelection = categorySpinner.getSelectedItemPosition();
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String cat = categorySpinner.getSelectedItem().toString();
+                setRecyclerAdapter(cat);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }
+
+
 
 }

@@ -46,4 +46,13 @@ public class DAOProduct {
             return databaseReference;
         }
 
+    public Query getFilter(String str)
+    {
+        if (str == null)
+        {
+            return databaseReference.orderByKey().limitToFirst(8);
+        }
+        return databaseReference.orderByChild("category").equalTo(str);
+    }
+
 }
