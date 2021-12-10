@@ -39,6 +39,9 @@ public class AERecipe extends AppCompatActivity {
     recyclerAdapter adapter;
     String pid;
 
+    private ArrayList<ProductHelperClass> itemsList;
+    DAOProduct dao;
+
 
     // Constructor
     @Override
@@ -52,7 +55,7 @@ public class AERecipe extends AppCompatActivity {
         initializeNewIngredientButton();
         fillUpItems();
 
-//        initializeSaveRecipeButton();
+        initializeSaveRecipeButton();
     }
 
     // Called when activity is resumed, not just started
@@ -117,8 +120,10 @@ public class AERecipe extends AppCompatActivity {
             // start the Intent
             startActivity(intent);
         });
+
         btnClose = findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v -> {finish();});
+
         btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
         btnSaveRecipe.setOnClickListener(v -> {
             String name = textProductName.getText().toString();
@@ -131,9 +136,6 @@ public class AERecipe extends AppCompatActivity {
 
             finish();
         });
-
-
-
     }
 
 
@@ -175,8 +177,40 @@ public class AERecipe extends AppCompatActivity {
             finish();
 
         });
-
-
     }
 
+
+    private void loadData(){
+        recyclerView = findViewById(R.id.rv);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        itemsList = new ArrayList<>();
+        adapter= new recyclerAdapter(this, itemsList);
+        recyclerView.setAdapter(adapter);
+        dao = new DAOProduct();
+
+
+//        dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        dao.getFilter("Ingredients").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ProductHelperClass> pros = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren())
+                {
+                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
+                    pros.add(pro);
+                }
+                adapter.setItems(pros);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

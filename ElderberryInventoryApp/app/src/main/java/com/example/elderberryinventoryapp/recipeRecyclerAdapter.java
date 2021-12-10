@@ -13,21 +13,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.elderberryinventoryapp.ProductHelperClass;
+import com.example.elderberryinventoryapp.ui.main.RecipeHelperClass;
 
 import java.util.ArrayList;
 
 public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // Member Variables
-    private ArrayList<ProductHelperClass> itemsList;
+    private ArrayList<RecipeHelperClass> itemsList;
     Context context;
 
-    public void setItems(ArrayList<ProductHelperClass> pro)
+    public void setItems(ArrayList<RecipeHelperClass> res)
     {
-        itemsList.addAll(pro);
+        itemsList.addAll(res);
     }
 
     // Constructor
-    public recipeRecyclerAdapter(Context context_in, ArrayList<ProductHelperClass> itemsList_in){
+    public recipeRecyclerAdapter(Context context_in, ArrayList<RecipeHelperClass> itemsList_in){
         this.itemsList = itemsList_in;
         this.context = context_in;
     }
@@ -64,12 +65,12 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ProductHelperClass p = null;
+        RecipeHelperClass p = null;
         this.onBindViewHolder(holder,position,p);
     }
 
     // Populate "cards" to display using data from itemsList
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, ProductHelperClass p){
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, RecipeHelperClass p){
         // Sara, please bind this RecyclerView to show all of the Ingredients in
         // the current Recipe. The argument ProductHelperClass may not be the right
         // one, so change this method as you see fit
@@ -79,9 +80,9 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // changing Ingredients in the Recipe instead of Items in the Inventory
         RecipeViewHolder vh = (RecipeViewHolder) holder;
 
-        ProductHelperClass pro = p==null? itemsList.get(position):p;
-        vh.itemQuantityText.setText(pro.getMinNumber());
-        vh.itemNameText.setText(pro.getName());
+        RecipeHelperClass pro = p==null? itemsList.get(position):p;
+        vh.itemQuantityText.setText(pro.getAmount());
+        vh.itemNameText.setText(pro.getI_name());
 
     }
 

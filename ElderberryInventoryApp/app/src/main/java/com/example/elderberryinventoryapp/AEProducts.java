@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,13 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class AEProducts extends AppCompatActivity {
@@ -29,7 +28,7 @@ public class AEProducts extends AppCompatActivity {
 
 //    FirebaseDatabase rootNode;
 //    DatabaseReference reference;
-    private long maxid = 0;
+    private String maxid ;
     FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     DatabaseReference reference = rootNode.getReference("products");
 
@@ -41,6 +40,7 @@ public class AEProducts extends AppCompatActivity {
         setSpinnerAdapter();
 
         bindButtons();
+        setMaxid();
         setListeners();
         spinnerChange();
 
@@ -77,19 +77,19 @@ public class AEProducts extends AppCompatActivity {
         else
         {
             // Generate the ID (Auto increment)
-            reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            maxid = snapshot.getChildrenCount() + 1;
-                            pid.setText(Long.toString(maxid));
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if (snapshot.exists()){
+//                            maxid = snapshot.getChildrenCount() + 1;
+//                            pid.setText(Long.toString(maxid));
+//                        }
+//                    }
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
             btnAdd.setText("Add");
             categorySpinner.setEnabled(true);
 
@@ -111,6 +111,7 @@ public class AEProducts extends AppCompatActivity {
 
                 String name = pName.getText().toString();
                 String id = pid.getText().toString();
+//                String id = setMaxid();
                 String numberOfHave = pNumberOfHave.getText().toString();
                 String minNumber = pMinNumber.getText().toString();
                 String category = categorySpinner.getSelectedItem().toString();
@@ -164,5 +165,24 @@ public class AEProducts extends AppCompatActivity {
             }
         });
 
+    }
+    public void setMaxid(){
+        Query mDatabasemaxId = reference.orderByChild("id").limitToLast(1);
+        mDatabasemaxId.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot){
+                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+//                    Toast.makeText(getApplicationContext(),childSnapshot.getKey(),Toast.LENGTH_LONG).show();
+
+                    int mid = Integer.valueOf(childSnapshot.getKey()) +1 ;
+                     maxid = String.valueOf(mid);
+                    pid.setText(maxid);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException(); // don't swallow errors
+            }
+        });
     }
 }

@@ -20,7 +20,7 @@ public class AEIngredient extends AppCompatActivity {
     Button btnCancel;
     private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
-    recipeRecyclerAdapter adapter;
+    recyclerAdapter adapter;
     DAOProduct dao;
     String key =null;
 
@@ -46,7 +46,7 @@ public class AEIngredient extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         itemsList = new ArrayList<>();
-        adapter= new recipeRecyclerAdapter(this, itemsList);
+        adapter= new recyclerAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
         dao = new DAOProduct();
         dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,7 +78,7 @@ public class AEIngredient extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         itemsList = new ArrayList<>();
-        adapter= new recipeRecyclerAdapter(this, itemsList);
+        adapter= new recyclerAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
         dao = new DAOProduct();
 

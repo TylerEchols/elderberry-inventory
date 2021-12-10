@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
-        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
+//        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
         spinnerChange();
      }
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void spinnerChange(){
 //        int iCurrentSelection = categorySpinner.getSelectedItemPosition();
-
+//        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
