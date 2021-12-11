@@ -11,16 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<RecipeHelperClass> itemsList;
+public class goGetRecylcerAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+    private ArrayList<ProductHelperClass> itemsList;
     Context context;
 
-    public void setItems(ArrayList<RecipeHelperClass> pro)
+    public void setItems(ArrayList<ProductHelperClass> pro)
     {
         itemsList.addAll(pro);
     }
-
-    public recipeRecyclerAdapter(Context context , ArrayList<RecipeHelperClass> itemsList) {
+    public goGetRecylcerAdapter( Context context, ArrayList<ProductHelperClass> itemsList) {
         this.itemsList = itemsList;
         this.context = context;
     }
@@ -28,34 +27,34 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         // Member Variables for each widget in inventory_item_card.xml
         private TextView textItemName;
-        private TextView quantity;
+        private TextView textMinNumber;
 
         public MyViewHolder(final View view){
             super(view);
-            textItemName = view.findViewById(R.id.textName);
-            quantity = view.findViewById(R.id.textQuantity);
+            textItemName = view.findViewById(R.id.txtIngName);
+            textMinNumber = view.findViewById(R.id.txtMinNum);
         }
     }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.ingredient_card, parent, false);
-        return new goGetRecylcerAdapter.MyViewHolder(itemView);
+                inflate(R.layout.item_gogetlist, parent, false);
+        return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        RecipeHelperClass model = itemsList.get(position);
+        ProductHelperClass model = itemsList.get(position);
         MyViewHolder vh = (MyViewHolder) holder;
+        long need = Long.parseLong(model.getMinNumber())- Long.parseLong(model.getNumberOfHave()) ;
+
         vh.textItemName.setText(model.getName());
-        vh.quantity.setText(model.getAmount());
+        vh.textMinNumber.setText( Long.toString(need));
     }
 
     @Override
     public int getItemCount() {
         return itemsList.size();
-
     }
 }

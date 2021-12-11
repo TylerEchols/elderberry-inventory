@@ -40,7 +40,6 @@ public class AEProducts extends AppCompatActivity {
         setSpinnerAdapter();
 
         bindButtons();
-        setMaxid();
         setListeners();
         spinnerChange();
 
@@ -76,23 +75,10 @@ public class AEProducts extends AppCompatActivity {
             }
         else
         {
-            // Generate the ID (Auto increment)
-//            reference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        if (snapshot.exists()){
-//                            maxid = snapshot.getChildrenCount() + 1;
-//                            pid.setText(Long.toString(maxid));
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
             btnAdd.setText("Add");
             categorySpinner.setEnabled(true);
-
+            // Generate Id
+            setMaxid();
         }
     }
 
@@ -111,7 +97,6 @@ public class AEProducts extends AppCompatActivity {
 
                 String name = pName.getText().toString();
                 String id = pid.getText().toString();
-//                String id = setMaxid();
                 String numberOfHave = pNumberOfHave.getText().toString();
                 String minNumber = pMinNumber.getText().toString();
                 String category = categorySpinner.getSelectedItem().toString();

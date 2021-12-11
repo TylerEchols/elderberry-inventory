@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ElderberryInventoryApp">
         <activity
+            android:name=".test"
+            android:exported="true" />
+        <activity
             android:name=".AEIngredient"
             android:exported="false" />
         <activity

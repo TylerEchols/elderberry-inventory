@@ -7,14 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.elderberryinventoryapp.ui.main.RecipeHelperClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,13 +32,16 @@ public class AERecipe extends AppCompatActivity {
     Spinner categorySpinner; // Spinner is the term for dropdown menu
     Button btnAddIngredient , btnClose , btnSaveRecipe;
     TextView textProductName;
-    private ArrayList<ProductHelperClass> ingredientsList;
+//    private ArrayList<ProductHelperClass> ingredientsList;
+    private ArrayList<RecipeHelperClass> itemlist;
     private RecyclerView recyclerView;
-    recyclerAdapter adapter;
+//    recyclerAdapter adapter;
+    recipeRecyclerAdapter recipeAdapter;
     String pid;
+    DAORecipe dao;
 
-    private ArrayList<ProductHelperClass> itemsList;
-    DAOProduct dao;
+//    private ArrayList<RecipeHelperClass> itemsList;
+
 
 
     // Constructor
@@ -49,13 +50,13 @@ public class AERecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //Hide the action bar
         setContentView(R.layout.activity_aerecipe);
-        recyclerView = findViewById(R.id.items_recycler_view);
 
 //        setSpinnerAdapter();
         initializeNewIngredientButton();
         fillUpItems();
 
         initializeSaveRecipeButton();
+
     }
 
     // Called when activity is resumed, not just started
@@ -66,6 +67,8 @@ public class AERecipe extends AppCompatActivity {
 
         // Refresh RecyclerView
 //        setRecyclerAdapter();
+//        loadData();
+
     }
 
 
@@ -82,32 +85,6 @@ public class AERecipe extends AppCompatActivity {
 
     // Initialize RecyclerView's adapter for list of items
     // Sara, please adjust this method to work with Recipes instead of Products
-    private void setRecyclerAdapter() {
-        //Database
-        ingredientsList = new ArrayList<>();
-        adapter = new recyclerAdapter(this,ingredientsList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-//        root.addValueEventListener(new ValueEventListener() {
-        referenceR.addValueEventListener(new ValueEventListener() {
-        @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-                    ingredientsList.add(model);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-    }
-
 
     // Set OnClickListener for button to add Ingredient
     private void initializeNewIngredientButton(){
@@ -127,14 +104,14 @@ public class AERecipe extends AppCompatActivity {
         btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
         btnSaveRecipe.setOnClickListener(v -> {
             String name = textProductName.getText().toString();
-            String id = pid;
+            String pid = "7";
             String Amount ="1";
             String batchResult = "10";
-            RecipeHelperClass helperClass = new RecipeHelperClass(id ,name, Amount, batchResult);
-            referenceR.child(id).setValue(helperClass);
+            RecipeHelperClass helperClass = new RecipeHelperClass(pid ,name, Amount, batchResult);
+            referenceR.child(pid).setValue(helperClass);
 //            referenceR.push().setValue(helperClass); // Generate primary key randomly
 
-            finish();
+//            finish();
         });
     }
 
@@ -165,9 +142,10 @@ public class AERecipe extends AppCompatActivity {
 
             String name = textProductName.getText().toString();
             String id = pid;
+            String p_id = pid;
             String Amount ="1";
             String batchResult = "10";
-            RecipeHelperClass helperClass = new RecipeHelperClass(name, id, Amount, batchResult);
+            RecipeHelperClass helperClass = new RecipeHelperClass( p_id, name, Amount, batchResult);
 //            reference.child(id).setValue(helperClass);//Use id as the primary key
                 referenceR.push().setValue(helperClass); // Generate primary key randomly
 
@@ -181,29 +159,29 @@ public class AERecipe extends AppCompatActivity {
 
 
     private void loadData(){
-        recyclerView = findViewById(R.id.rv);
+        recyclerView = findViewById(R.id.in_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        itemsList = new ArrayList<>();
-        adapter= new recyclerAdapter(this, itemsList);
-        recyclerView.setAdapter(adapter);
-        dao = new DAOProduct();
+        itemlist = new ArrayList<>();
+        recipeAdapter = new recipeRecyclerAdapter(this, itemlist);
+        recyclerView.setAdapter(recipeAdapter);
+        dao = new DAORecipe();
 
-
-//        dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
-        dao.getFilter("Ingredients").addListenerForSingleValueEvent(new ValueEventListener() {
-
+//        dao.getFilter(pid).addListenerForSingleValueEvent(new ValueEventListener() {
+        referenceR.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<ProductHelperClass> pros = new ArrayList<>();
+                ArrayList<RecipeHelperClass> recipes = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren())
                 {
-                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
-                    pros.add(pro);
+                    RecipeHelperClass re = data.getValue(RecipeHelperClass.class);
+                    recipes.add(re);
+//                    Toast toast = Toast.makeText(getApplicationContext(), re.getI_name()+ "Saved successfully", Toast.LENGTH_SHORT);
+//                    toast.show();
                 }
-                adapter.setItems(pros);
-                adapter.notifyDataSetChanged();
+                recipeAdapter.setItems(recipes);
+                recipeAdapter.notifyDataSetChanged();
 
             }
 

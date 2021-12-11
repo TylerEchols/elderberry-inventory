@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
-//        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
         spinnerChange();
+        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
+
      }
 
 
@@ -148,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
     // Navigate to Main Activity
     public void navigateInventory(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void navigateCalculator(View view){
+        Intent intent = new Intent(getApplicationContext(), test.class);
         startActivity(intent);
     }
 

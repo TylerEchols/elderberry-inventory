@@ -25,14 +25,16 @@ import java.util.ArrayList;
 
 public class GoGetList extends AppCompatActivity {
 
-//    private FirebaseDatabase db = FirebaseDatabase.getInstance();
-//    private DatabaseReference root = db.getReference().child("products");
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference root = db.getReference().child("products");
 
     // Member variables
 //    Button btnProduct ;
-//    private ArrayList<ProductHelperClass> itemsList;
-//    private RecyclerView recyclerView;
-//    recyclerAdapter adapter;
+    private ArrayList<ProductHelperClass> itemsList;
+    private RecyclerView recyclerView;
+    goGetRecylcerAdapter adapter;
+    DAOProduct dao;
+
 
 
     // Constructor
@@ -40,7 +42,8 @@ public class GoGetList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_go_get_list);
-//        recyclerView = findViewById(R.id.items_recycler_view);
+        getSupportActionBar().hide(); //Hide the action bar
+        recyclerView = findViewById(R.id.go_get_recycler_view);
     }
 
     // Called when activity is resumed, not just started
@@ -49,7 +52,7 @@ public class GoGetList extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
-//        setRecyclerAdapter();
+        setRecyclerAdapter();
     }
 
 
@@ -57,26 +60,36 @@ public class GoGetList extends AppCompatActivity {
 
     private void setRecyclerAdapter() {
         //Database
-//        itemsList = new ArrayList<>();
-//        adapter = new recyclerAdapter(this,itemsList);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(adapter);
-//
+        itemsList = new ArrayList<>();
+        adapter = new goGetRecylcerAdapter(this,itemsList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        dao = new DAOProduct();
+
 //        root.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-//                    itemsList.add(model);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
+        dao.getFilter("Ingredients").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ProductHelperClass> pros = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren())
+                {
+                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
+                    long need = Long.parseLong(pro.getNumberOfHave())- Long.parseLong(pro.getMinNumber()) ;
+//                    Toast toast = Toast.makeText(getApplicationContext(), Long.toString(need)+ "Saved successfully", Toast.LENGTH_SHORT);
+//                    toast.show();
+                    if (need <= 0 )
+                        pros.add(pro);
+                }
+                adapter.setItems(pros);
+                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     public void navigateInventory(View view) {
