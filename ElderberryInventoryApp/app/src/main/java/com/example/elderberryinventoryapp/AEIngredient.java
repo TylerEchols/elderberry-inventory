@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,12 +18,13 @@ import java.util.ArrayList;
 
 public class AEIngredient extends AppCompatActivity {
 
-    Button btnCancel;
+    Button btnCancel, btnSaveRecipe;
     private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
-    recyclerAdapter adapter;
+    ingredientRecyclerAdapter adapter;
     DAOProduct dao;
     String key =null;
+    ArrayList<ProductHelperClass> inglist;
 
 
     @Override
@@ -37,6 +39,15 @@ public class AEIngredient extends AppCompatActivity {
     private void initializedButtons(){
        btnCancel =findViewById(R.id.btnCancel);
        btnCancel.setOnClickListener(v -> { finish();});
+
+        btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
+//        btnSaveRecipe.setOnClickListener(v -> {
+//            inglist = new ArrayList<>();
+//            inglist = adapter.getIngList();
+//            if (inglist.size()>0){
+//                Toast.makeText(this.getApplicationContext(), inglist.size()+"" , Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -46,7 +57,7 @@ public class AEIngredient extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         itemsList = new ArrayList<>();
-        adapter= new recyclerAdapter(this, itemsList);
+        adapter= new ingredientRecyclerAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
         dao = new DAOProduct();
         dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -64,7 +75,6 @@ public class AEIngredient extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -78,29 +88,20 @@ public class AEIngredient extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         itemsList = new ArrayList<>();
-        adapter= new recyclerAdapter(this, itemsList);
+        adapter= new ingredientRecyclerAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
         dao = new DAOProduct();
-
-
-//        dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
         dao.getFilter("Ingredients").addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<ProductHelperClass> pros = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren())
                 {
-//                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
-//                    pro.setId(data.getKey());
-//                    pros.add(pro);
-//                    key = data.getKey();
                     ProductHelperClass pro = data.getValue(ProductHelperClass.class);
                     pros.add(pro);
                 }
                 adapter.setItems(pros);
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -108,5 +109,7 @@ public class AEIngredient extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

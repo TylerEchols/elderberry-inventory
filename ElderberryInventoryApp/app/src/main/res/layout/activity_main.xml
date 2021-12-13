@@ -24,6 +24,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/calculator_nav_button_label"
+        android:onClick="navigateCalculator"
         app:layout_constraintStart_toEndOf="@+id/inventory_nav_button"
         app:layout_constraintTop_toTopOf="parent" />
 

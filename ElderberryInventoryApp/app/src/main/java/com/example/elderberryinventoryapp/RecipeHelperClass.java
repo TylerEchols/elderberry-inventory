@@ -1,7 +1,12 @@
 package com.example.elderberryinventoryapp;
 
-public class RecipeHelperClass {
+import java.io.Serializable;
+
+public class RecipeHelperClass implements Serializable {
     String id ,name ,amount , batchresult;
+
+    public RecipeHelperClass() {
+    }
 
     public RecipeHelperClass(String id, String name, String amount, String batchresult) {
         this.id = id;

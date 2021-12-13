@@ -55,7 +55,7 @@ public class AERecipe extends AppCompatActivity {
         initializeNewIngredientButton();
         fillUpItems();
 
-        initializeSaveRecipeButton();
+//        initializeSaveRecipeButton();
 
     }
 
@@ -67,7 +67,7 @@ public class AERecipe extends AppCompatActivity {
 
         // Refresh RecyclerView
 //        setRecyclerAdapter();
-//        loadData();
+        loadData();
 
     }
 
@@ -104,12 +104,11 @@ public class AERecipe extends AppCompatActivity {
         btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
         btnSaveRecipe.setOnClickListener(v -> {
             String name = textProductName.getText().toString();
-            String pid = "7";
             String Amount ="1";
             String batchResult = "10";
             RecipeHelperClass helperClass = new RecipeHelperClass(pid ,name, Amount, batchResult);
-            referenceR.child(pid).setValue(helperClass);
-//            referenceR.push().setValue(helperClass); // Generate primary key randomly
+//            referenceR.child(pid).setValue(helperClass);
+            referenceR.push().setValue(helperClass); // Generate primary key randomly
 
 //            finish();
         });

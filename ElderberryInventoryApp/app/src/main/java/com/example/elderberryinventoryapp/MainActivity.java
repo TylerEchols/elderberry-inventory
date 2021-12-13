@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
     recyclerAdapter adapter;
+    DAOProduct dao;
+    boolean tt = true;
 
 
 
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSpinnerAdapter();
         initializeNewItemButton();
+//        spinnerChange();
+
     }
 
     // Called when activity is resumed, not just started
@@ -60,8 +64,12 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // Refresh RecyclerView
+        if (tt == true) {
+           tt = false;
+        }
+        else
+            loadData2(categorySpinner.getSelectedItem().toString());
         spinnerChange();
-        setRecyclerAdapter(categorySpinner.getSelectedItem().toString());
 
      }
 
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-//----
+
         root = FirebaseDatabase.getInstance().getReference();
         Query query = root.child("products").orderByChild("category").equalTo(cat);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,24 +117,42 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //-----------
-//        root.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    ProductHelperClass model = dataSnapshot.getValue(ProductHelperClass.class);
-//                    itemsList.add(model);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-
     }
 
+    private void loadData2(String cat){
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        itemsList = new ArrayList<>();
+        adapter= new recyclerAdapter(this, itemsList);
+        recyclerView.setAdapter(adapter);
+        dao = new DAOProduct();
+
+        dao.getFilter(cat).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ProductHelperClass> pros = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren())
+                {
+//                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
+//                    pro.setId(data.getKey());
+//                    pros.add(pro);
+//                    key = data.getKey();
+                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
+                    pros.add(pro);
+                }
+                adapter.setItems(pros);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     // Initialize button for added new item
     private void initializeNewItemButton(){
@@ -164,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String cat = categorySpinner.getSelectedItem().toString();
-                setRecyclerAdapter(cat);
+                loadData2(cat);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
