@@ -53,6 +53,7 @@
             android:layout_marginStart="2dp"
             android:background="#B2E7E8"
             android:padding="5dp"
+            android:selectAllOnFocus="false"
             android:textSize="17sp"
             android:textStyle="bold" />
 

@@ -47,13 +47,13 @@ public class AEProducts extends AppCompatActivity {
 
     private void bindButtons(){
         pName = findViewById(R.id.txtname);
+        pName.requestFocus();
         pid = findViewById(R.id.txtid);
         pNumberOfHave = findViewById(R.id.txtNhave);
         pMinNumber = findViewById(R.id.txtNmin);
         btnAdd = findViewById(R.id.btnAdd);
         btnClose = findViewById(R.id.btnClose);
         btnAddRecipt = findViewById(R.id.btnAddRecipe);
-
         categorySpinner = findViewById(R.id.category_select_spinner);
 
         DAOProduct dao =new DAOProduct();

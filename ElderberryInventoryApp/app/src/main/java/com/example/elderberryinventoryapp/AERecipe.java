@@ -105,7 +105,7 @@ public class AERecipe extends AppCompatActivity {
         btnClose = findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v -> {finish();});
 
-        btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
+//        btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
 //        btnSaveRecipe.setOnClickListener(v -> {
 //            String name = textProductName.getText().toString();
 //            String Amount ="1";
@@ -157,6 +157,12 @@ public class AERecipe extends AppCompatActivity {
                 for (DataSnapshot data : snapshot.getChildren())
                 {
                     RecipeHelperClass re = data.getValue(RecipeHelperClass.class);
+                    //-----
+//                    pro.setId(data.getKey());
+//                    pros.add(pro);
+//                    key = data.getKey();
+                    //----
+                    re.setKey(data.getKey());
                     idList.add(re.getIid());
                     recipes.add(re);
                 }

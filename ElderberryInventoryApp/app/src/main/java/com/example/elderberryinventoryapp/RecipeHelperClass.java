@@ -3,7 +3,7 @@ package com.example.elderberryinventoryapp;
 import java.io.Serializable;
 
 public class RecipeHelperClass implements Serializable {
-    String id , iid ,name ,amount , batchresult;
+    String id , iid ,name ,amount , batchresult , key;
 
     public RecipeHelperClass() {
     }
@@ -54,5 +54,13 @@ public class RecipeHelperClass implements Serializable {
 
     public void setIid(String iid) {
         this.iid = iid;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

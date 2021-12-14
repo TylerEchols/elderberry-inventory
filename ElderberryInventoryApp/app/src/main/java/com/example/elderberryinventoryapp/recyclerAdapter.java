@@ -42,18 +42,13 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private Spinner categorySpinner;
 
 
-        
         public MyViewHolder(final View view){
             super(view);
-            //nameTxt = view.findViewById(R.id.textView2);
             textMinNumber = view.findViewById(R.id.etMinNumber);
-//            textMinLabel = view.findViewById(R.id.etMinLabel);
-//            imageView = view.findViewById(R.id.imageView);
             textItemName = view.findViewById(R.id.etItemName);
             textHaveNumber = view.findViewById(R.id.etHaveNumber);
             textOption = view.findViewById(R.id.txt_option);
             categorySpinner = view.findViewById(R.id.category_select_spinner);
-//            textHaveLabel = view.findViewById(R.id.etHaveLabel);
         }
     }
 
@@ -75,56 +70,44 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, ProductHelperClass p) {
         MyViewHolder vh = (MyViewHolder) holder;
 
-//        ProductHelperClass model = itemsList.get(position);
-
         ProductHelperClass pro = p==null? itemsList.get(position):p;
         vh.textMinNumber.setText(pro.getMinNumber());
-        //----------------------------------
 
         // Placeholder line for if we decide to include thumbnails
-        // holder.imageView.setImageResource(itemsList.get(position).getImageView());
         vh.textItemName.setText(pro.getName());
         vh.textHaveNumber.setText(pro.getNumberOfHave());
-//        int pos = vh.categorySpinner.getPositionForView (value);
-//        getSpinnerField().setSelection(pos);
-//        vh.categorySpinner.setSelection(vh.categorySpinner.getAdapter().indexOf(pro.getCategory().toString()));
 
 
+        vh.textOption.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(context, vh.textOption);
+            popupMenu.inflate(R.menu.options_menu);
 
-        vh.textOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, vh.textOption);
-                popupMenu.inflate(R.menu.options_menu);
-
-                popupMenu.setOnMenuItemClickListener(item->
+            popupMenu.setOnMenuItemClickListener(item->
+            {
+                switch (item.getItemId())
                 {
-                    switch (item.getItemId())
-                    {
-                          case R.id.menu_edit:
-                            Intent intent=new Intent(context,AEProducts.class);
-                            intent.putExtra("EDIT",pro);
-                            context.startActivity(intent);
-                            break;
-                        case R.id.menu_remove:
-                            DAOProduct dao=new DAOProduct();
-                            dao.remove(pro.getId()).addOnSuccessListener(suc->
-                            {
-                                Toast.makeText(context, "Record is removed", Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
-                                itemsList.remove(pro);
-                            }).addOnFailureListener(er->
-                            {
-                                Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
+                      case R.id.menu_edit:
+                        Intent intent=new Intent(context,AEProducts.class);
+                        intent.putExtra("EDIT",pro);
+                        context.startActivity(intent);
+                        break;
+                    case R.id.menu_remove:
+                        DAOProduct dao=new DAOProduct();
+                        dao.remove(pro.getId()).addOnSuccessListener(suc->
+                        {
+                            Toast.makeText(context, "Record is removed", Toast.LENGTH_SHORT).show();
+                            notifyItemRemoved(position);
+                            itemsList.remove(pro);
+                        }).addOnFailureListener(er->
+                        {
+                            Toast.makeText(context, ""+er.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
 
-                            break;
-                    }
-                    return false;
-                });
-                popupMenu.show();
-            }
-
+                        break;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
 
     }

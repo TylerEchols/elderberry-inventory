@@ -29,7 +29,6 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
     ingredientRecyclerAdapter adapter;
     EditText edtNum;
     DAOProduct dao;
-    String key =null;
     boolean saveClicked = false;
     String pid;
 
@@ -47,10 +46,7 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("pid")!= null) {
             pid = bundle.getString("pid");
-
             fetchList = bundle.getStringArrayList("idlist");
-//            if (fetchList != null)
-//                Toast.makeText(getApplicationContext(), fetchList.size() + " size id", Toast.LENGTH_SHORT).show();
         }
 
         edtNum = findViewById(R.id.editTextNumber);
@@ -77,8 +73,6 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         btnSaveRecipe.setOnClickListener(v -> {
             Toast toast;
             if (inglist != null ) {
-//                toast = Toast.makeText(getApplicationContext(), inglist.size() + " ", Toast.LENGTH_SHORT);
-//                toast.show();
                 for (ProductHelperClass pro : inglist) {
                     String name = pro.getName();
                     String iid = pro.getId();
@@ -108,8 +102,6 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
                     ProductHelperClass pro = data.getValue(ProductHelperClass.class);
                     if (fetchList.indexOf(pro.getId()) == -1)
                         pros.add(pro);
-//                        Toast.makeText(getApplicationContext(), "id = "+pro.getId() +" exist= "+ fetchList.indexOf(pro.getId())+ " ", Toast.LENGTH_SHORT).show();
-
                 }
                 adapter.setItems(pros);
                 adapter.notifyDataSetChanged();
@@ -120,8 +112,6 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
 
             }
         });
-
-
     }
 
 
@@ -131,7 +121,6 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         {
             if (isChecked == true) inglist.add(ingredient);
             else inglist.remove(inglist.indexOf(ingredient));
-//            for (ProductHelperClass pro : ingredient) {
                 Toast toast = Toast.makeText(getApplicationContext(),"Name= "+ ingredient.getName() + isChecked +", Id= "+ingredient.getId(), Toast.LENGTH_SHORT);
                 toast.show();
             }
