@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ingredientRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<ProductHelperClass> itemsList;
     private AdapterInterface adapterInterface;
-    private ArrayList<ProductHelperClass> ingList;
+//    private ArrayList<ProductHelperClass> ingList;
     Context context;
 
     public ingredientRecyclerAdapter( Context context ,ArrayList<ProductHelperClass> itemsList, AdapterInterface adapterInterface) {
@@ -55,21 +55,15 @@ public class ingredientRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         ProductHelperClass model = itemsList.get(position);
         MyViewHolder vh = (MyViewHolder) holder;
 
-        ingList = new ArrayList<>();
+//        ingList = new ArrayList<>();
         vh.checkBox.setText(model.getName());
         vh.checkBox.setOnClickListener(v -> {
-            if (vh.checkBox.isChecked()) ingList.add(model);
-            else ingList.remove(ingList.indexOf(model));
-//            Toast.makeText(context, ingList.size()+"" , Toast.LENGTH_SHORT).show();
-            adapterInterface.getlist(ingList);
+            adapterInterface.getlist(model, vh.checkBox.isChecked());
+
         });
 
     }
 
-//    @ViewDebug.ExportedProperty
-    public ArrayList<ProductHelperClass> getIngList() {
-        return ingList;
-    }
 
     @Override
     public int getItemCount() {

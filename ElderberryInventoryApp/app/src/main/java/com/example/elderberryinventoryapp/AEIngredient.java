@@ -6,25 +6,35 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class AEIngredient extends AppCompatActivity implements AdapterInterface{
 
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference referenceR = db.getReference().child("recipe");
     Button btnCancel, btnSaveRecipe;
     private ArrayList<ProductHelperClass> itemsList;
     private RecyclerView recyclerView;
     ingredientRecyclerAdapter adapter;
+    EditText edtNum;
     DAOProduct dao;
     String key =null;
-//    ArrayList<ProductHelperClass> inglist;
+    boolean saveClicked = false;
+    String pid;
+
+    ArrayList<ProductHelperClass> inglist;
+    ArrayList<String> fetchList;
 
 
     @Override
@@ -32,7 +42,18 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //Hide the action bar
         setContentView(R.layout.activity_aeingredient);
+        fetchList= new ArrayList<>();
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("pid")!= null) {
+            pid = bundle.getString("pid");
+
+            fetchList = bundle.getStringArrayList("idlist");
+//            if (fetchList != null)
+//                Toast.makeText(getApplicationContext(), fetchList.size() + " size id", Toast.LENGTH_SHORT).show();
+        }
+
+        edtNum = findViewById(R.id.editTextNumber);
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -40,62 +61,39 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         itemsList = new ArrayList<>();
         adapter= new ingredientRecyclerAdapter(this, itemsList, this);
 
+        inglist = new ArrayList<>();
         loadData2();
 
         initializedButtons();
     }
     private void initializedButtons(){
        btnCancel =findViewById(R.id.btnCancel);
-       btnCancel.setOnClickListener(v -> { finish();});
+       btnCancel.setOnClickListener(v -> {
+           saveClicked = false;
+           finish();
+       });
 
-//        btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
-//        btnSaveRecipe.setOnClickListener(v -> {
-//            inglist = new ArrayList<>();
-//            inglist = adapter.getIngList();
-//            if (inglist.size()>0){
-//                Toast.makeText(this.getApplicationContext(), inglist.size()+"" , Toast.LENGTH_SHORT).show();
-//            }
-//            Toast toast;
-//            if (inglist == null){
-//                toast = Toast.makeText(getApplicationContext(),  " nullllll", Toast.LENGTH_SHORT);
-//
-//            }else
-//                toast = Toast.makeText(getApplicationContext(),  " not nul", Toast.LENGTH_SHORT);
-//            toast.show();
-//        });
-    }
-
-
-    private void loadDate(){
-        recyclerView = findViewById(R.id.rv);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        itemsList = new ArrayList<>();
-        adapter= new ingredientRecyclerAdapter(this, itemsList, this);
-        recyclerView.setAdapter(adapter);
-        dao = new DAOProduct();
-        dao.get(key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<ProductHelperClass> pros = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren())
-                {
-                    ProductHelperClass pro = data.getValue(ProductHelperClass.class);
-                    pro.setId(data.getKey());
-                    pros.add(pro);
-                    key = data.getKey();
+        btnSaveRecipe = findViewById(R.id.btnSaveIngredient);
+        btnSaveRecipe.setOnClickListener(v -> {
+            Toast toast;
+            if (inglist != null ) {
+//                toast = Toast.makeText(getApplicationContext(), inglist.size() + " ", Toast.LENGTH_SHORT);
+//                toast.show();
+                for (ProductHelperClass pro : inglist) {
+                    String name = pro.getName();
+                    String iid = pro.getId();
+                    String Amount = edtNum.getText().toString();
+                    String batchResult = "10";
+                    RecipeHelperClass helperClass = new RecipeHelperClass(pid, iid, name, Amount, batchResult);
+                    referenceR.push().setValue(helperClass); // Generate primary key randomly
                 }
-                adapter.setItems(pros);
-                adapter.notifyDataSetChanged();
-
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            saveClicked = true;
+            finish();
         });
     }
+
+
 
     private void loadData2(){
 
@@ -108,7 +106,10 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
                 for (DataSnapshot data : snapshot.getChildren())
                 {
                     ProductHelperClass pro = data.getValue(ProductHelperClass.class);
-                    pros.add(pro);
+                    if (fetchList.indexOf(pro.getId()) == -1)
+                        pros.add(pro);
+//                        Toast.makeText(getApplicationContext(), "id = "+pro.getId() +" exist= "+ fetchList.indexOf(pro.getId())+ " ", Toast.LENGTH_SHORT).show();
+
                 }
                 adapter.setItems(pros);
                 adapter.notifyDataSetChanged();
@@ -123,11 +124,16 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
 
     }
 
-    @Override
-    public void getlist(ArrayList<ProductHelperClass> ingredient) {
-        if (ingredient != null)
-        {
 
-        Toast toast = Toast.makeText(getApplicationContext(), ingredient.size() + " Item is selected", Toast.LENGTH_SHORT);
-        toast.show();}    }
+    @Override
+    public void getlist(ProductHelperClass ingredient, boolean isChecked) {
+        if (ingredient != null  )
+        {
+            if (isChecked == true) inglist.add(ingredient);
+            else inglist.remove(inglist.indexOf(ingredient));
+//            for (ProductHelperClass pro : ingredient) {
+                Toast toast = Toast.makeText(getApplicationContext(),"Name= "+ ingredient.getName() + isChecked +", Id= "+ingredient.getId(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+    }
 }

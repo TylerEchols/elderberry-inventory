@@ -34,6 +34,7 @@ public class AERecipe extends AppCompatActivity {
     TextView textProductName;
 //    private ArrayList<ProductHelperClass> ingredientsList;
     private ArrayList<RecipeHelperClass> itemlist;
+    private ArrayList<String> idList;
     private RecyclerView recyclerView;
 //    recyclerAdapter adapter;
     recipeRecyclerAdapter recipeAdapter;
@@ -93,7 +94,10 @@ public class AERecipe extends AppCompatActivity {
         btnAddIngredient.setOnClickListener(v -> {
             // Create the Intent object of this class Context() to Second_activity class
             Intent intent = new Intent(getApplicationContext(), AEIngredient.class);
-
+            Bundle extras = new Bundle();
+            extras.putString("pid",pid);
+            extras.putStringArrayList("idlist",idList);
+            intent.putExtras(extras);
             // start the Intent
             startActivity(intent);
         });
@@ -102,16 +106,16 @@ public class AERecipe extends AppCompatActivity {
         btnClose.setOnClickListener(v -> {finish();});
 
         btnSaveRecipe = findViewById(R.id.btnSaveRecipe);
-        btnSaveRecipe.setOnClickListener(v -> {
-            String name = textProductName.getText().toString();
-            String Amount ="1";
-            String batchResult = "10";
-            RecipeHelperClass helperClass = new RecipeHelperClass(pid ,name, Amount, batchResult);
-//            referenceR.child(pid).setValue(helperClass);
-            referenceR.push().setValue(helperClass); // Generate primary key randomly
-
-//            finish();
-        });
+//        btnSaveRecipe.setOnClickListener(v -> {
+//            String name = textProductName.getText().toString();
+//            String Amount ="1";
+//            String batchResult = "10";
+//            RecipeHelperClass helperClass = new RecipeHelperClass(pid,iid ,name, Amount, batchResult);
+////            referenceR.child(pid).setValue(helperClass);
+//            referenceR.push().setValue(helperClass); // Generate primary key randomly
+//
+////            finish();
+//        });
     }
 
 
@@ -134,30 +138,8 @@ public class AERecipe extends AppCompatActivity {
 
     }
 
-    private void setListeners(){
-        //Save Data into the firebase database
-        btnSaveRecipe = findViewById(R.id.btnAddRecipe);
-        btnSaveRecipe.setOnClickListener(v -> {
-
-            String name = textProductName.getText().toString();
-            String id = pid;
-            String p_id = pid;
-            String Amount ="1";
-            String batchResult = "10";
-            RecipeHelperClass helperClass = new RecipeHelperClass( p_id, name, Amount, batchResult);
-//            reference.child(id).setValue(helperClass);//Use id as the primary key
-                referenceR.push().setValue(helperClass); // Generate primary key randomly
-
-
-            Toast toast = Toast.makeText(getApplicationContext(), name + "Saved successfully", Toast.LENGTH_SHORT);
-            toast.show();
-            finish();
-
-        });
-    }
-
-
     private void loadData(){
+        idList = new ArrayList<>();
         recyclerView = findViewById(R.id.in_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -167,17 +149,16 @@ public class AERecipe extends AppCompatActivity {
         recyclerView.setAdapter(recipeAdapter);
         dao = new DAORecipe();
 
-//        dao.getFilter(pid).addListenerForSingleValueEvent(new ValueEventListener() {
-        referenceR.addValueEventListener(new ValueEventListener() {
+        dao.getFilter(pid).addListenerForSingleValueEvent(new ValueEventListener() {
+//        referenceR.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<RecipeHelperClass> recipes = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren())
                 {
                     RecipeHelperClass re = data.getValue(RecipeHelperClass.class);
+                    idList.add(re.getIid());
                     recipes.add(re);
-//                    Toast toast = Toast.makeText(getApplicationContext(), re.getI_name()+ "Saved successfully", Toast.LENGTH_SHORT);
-//                    toast.show();
                 }
                 recipeAdapter.setItems(recipes);
                 recipeAdapter.notifyDataSetChanged();

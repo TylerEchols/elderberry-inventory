@@ -3,16 +3,17 @@ package com.example.elderberryinventoryapp;
 import java.io.Serializable;
 
 public class RecipeHelperClass implements Serializable {
-    String id ,name ,amount , batchresult;
+    String id , iid ,name ,amount , batchresult;
 
     public RecipeHelperClass() {
     }
 
-    public RecipeHelperClass(String id, String name, String amount, String batchresult) {
+    public RecipeHelperClass(String id , String iid, String name, String amount, String batchresult) {
         this.id = id;
         this.name = name;
         this.amount = amount;
         this.batchresult = batchresult;
+        this.iid = iid;
     }
 
     public String getId() {
@@ -45,5 +46,13 @@ public class RecipeHelperClass implements Serializable {
 
     public void setBatchresult(String batchresult) {
         this.batchresult = batchresult;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
     }
 }

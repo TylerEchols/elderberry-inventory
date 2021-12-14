@@ -52,7 +52,7 @@ public class DAORecipe {
         {
             return databaseReference.orderByKey().limitToFirst(8);
         }
-        return databaseReference.orderByChild("id").equalTo("16");
+        return databaseReference.orderByChild("id").equalTo(str);
     }
 
 }
