@@ -50,6 +50,7 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         }
 
         edtNum = findViewById(R.id.editTextNumber);
+        edtNum.setText("1");
         recyclerView = findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -71,7 +72,11 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
 
         btnSaveRecipe = findViewById(R.id.btnSaveIngredient);
         btnSaveRecipe.setOnClickListener(v -> {
-            Toast toast;
+            if ((edtNum.getText() == null) || (edtNum.getText().toString() == "")){
+                edtNum.requestFocus();
+                Toast.makeText(getApplicationContext(),"Please enter the Amount ", Toast.LENGTH_SHORT).show();
+            }
+            else
             if (inglist != null ) {
                 for (ProductHelperClass pro : inglist) {
                     String name = pro.getName();
@@ -81,9 +86,11 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
                     RecipeHelperClass helperClass = new RecipeHelperClass(pid, iid, name, Amount, batchResult);
                     referenceR.push().setValue(helperClass); // Generate primary key randomly
                 }
+                finish();
+                saveClicked = true;
             }
-            saveClicked = true;
-            finish();
+
+
         });
     }
 
@@ -121,8 +128,8 @@ public class AEIngredient extends AppCompatActivity implements AdapterInterface{
         {
             if (isChecked == true) inglist.add(ingredient);
             else inglist.remove(inglist.indexOf(ingredient));
-                Toast toast = Toast.makeText(getApplicationContext(),"Name= "+ ingredient.getName() + isChecked +", Id= "+ingredient.getId(), Toast.LENGTH_SHORT);
-                toast.show();
+//                Toast toast = Toast.makeText(getApplicationContext(),"Name= "+ ingredient.getName() + isChecked +", Id= "+ingredient.getId(), Toast.LENGTH_SHORT);
+//                toast.show();
             }
     }
 }

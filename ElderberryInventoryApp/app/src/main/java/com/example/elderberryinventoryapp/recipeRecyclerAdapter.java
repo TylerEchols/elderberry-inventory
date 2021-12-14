@@ -63,7 +63,7 @@ public class recipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             PopupMenu popupMenu = new PopupMenu(context, vh.textOption);
             popupMenu.inflate(R.menu.options_menu);
 
-            
+
             popupMenu.setOnMenuItemClickListener(item->
             {
                 switch (item.getItemId())

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class ingredientRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<ProductHelperClass> itemsList;
     private AdapterInterface adapterInterface;
-//    private ArrayList<ProductHelperClass> ingList;
     Context context;
 
     public ingredientRecyclerAdapter( Context context ,ArrayList<ProductHelperClass> itemsList, AdapterInterface adapterInterface) {

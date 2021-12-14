@@ -69,6 +69,7 @@
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveIngredient"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
