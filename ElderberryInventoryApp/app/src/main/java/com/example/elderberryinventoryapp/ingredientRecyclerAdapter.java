@@ -3,6 +3,7 @@ package com.example.elderberryinventoryapp;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -15,25 +16,29 @@ import java.util.ArrayList;
 
 public class ingredientRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<ProductHelperClass> itemsList;
+    private AdapterInterface adapterInterface;
     private ArrayList<ProductHelperClass> ingList;
     Context context;
 
-    public ingredientRecyclerAdapter( Context context ,ArrayList<ProductHelperClass> itemsList) {
+    public ingredientRecyclerAdapter( Context context ,ArrayList<ProductHelperClass> itemsList, AdapterInterface adapterInterface) {
         this.itemsList = itemsList;
         this.context = context;
+        this.adapterInterface = adapterInterface;
     }
 
     public void setItems(ArrayList<ProductHelperClass> pro)
     {
         itemsList.addAll(pro);
     }
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         private CheckBox checkBox;
 
         public MyViewHolder(final View view){
             super(view);
             checkBox = view.findViewById(R.id.checkbox);
 //            textMinNumber = view.findViewById(R.id.txtMinNum);
+
         }
     }
 
@@ -49,18 +54,19 @@ public class ingredientRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ProductHelperClass model = itemsList.get(position);
         MyViewHolder vh = (MyViewHolder) holder;
-        long need = Long.parseLong(model.getMinNumber())- Long.parseLong(model.getNumberOfHave()) ;
 
         ingList = new ArrayList<>();
         vh.checkBox.setText(model.getName());
         vh.checkBox.setOnClickListener(v -> {
             if (vh.checkBox.isChecked()) ingList.add(model);
             else ingList.remove(ingList.indexOf(model));
-            Toast.makeText(context, ingList.size()+"" , Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, ingList.size()+"" , Toast.LENGTH_SHORT).show();
+            adapterInterface.getlist(ingList);
         });
-//        vh.textMinNumber.setText( Long.toString(need));
+
     }
 
+//    @ViewDebug.ExportedProperty
     public ArrayList<ProductHelperClass> getIngList() {
         return ingList;
     }
