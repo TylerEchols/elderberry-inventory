@@ -5,7 +5,7 @@
     android:layout_height="60dp"
     android:layout_margin="10dp"
     android:padding="12dp"
-    app:cardBackgroundColor="#F19690"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp">
 
@@ -23,9 +23,9 @@
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="check"
-                android:padding="10dp"
                 android:layout_marginLeft="5dp"
+                android:padding="10dp"
+                android:text="check"
                 android:textColorLink="#E86E6E"
                 android:textSize="20sp"
                 android:textStyle="bold" />

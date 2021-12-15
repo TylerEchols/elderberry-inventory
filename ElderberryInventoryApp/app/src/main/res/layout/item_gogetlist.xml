@@ -25,7 +25,7 @@
 
                 android:padding="8dp"
                 android:paddingRight="0dp"
-                android:text="Ingrident Name:"
+                android:text="Ingredient Name:"
                 android:textColor="#0F4C11"
                 android:textSize="20sp"
                 android:textStyle="bold" />
